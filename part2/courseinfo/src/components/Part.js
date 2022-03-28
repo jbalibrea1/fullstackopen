@@ -1,5 +1,7 @@
-export const Part = ({ name, exercise }) => (
+const Part = ({ name, exercise }) => (
   <p>
     {name} {exercise}
   </p>
 )
+
+export default Part

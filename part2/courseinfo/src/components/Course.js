@@ -1,19 +1,15 @@
-import React, { useState } from 'react'
-import Note from './components/Note'
+import React from 'react'
+import Header from './Header'
+import Content from './Content'
+import Total from './Total'
 
-const App = props => {
-  const [notes, setNotes] = useState(props.notes)
-
-  return (
+const Course = ({ course }) => (
+  <div>
     <div>
-      <h1>Notes</h1>
-      <ul>
-        {notes.map(note => (
-          <Note key={note.id} note={note} />
-        ))}
-      </ul>
+      <Header name={course.name} />
+      <Content parts={course.parts} />
+      <Total exer={course.parts} />
     </div>
-  )
-}
-
-export default App
+  </div>
+)
+export default Course

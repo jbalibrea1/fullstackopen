@@ -1,9 +1,11 @@
-import { Part } from './Part'
+import Part from './Part'
 
-export const Content = ({ content }) => (
+const Content = ({ parts }) => (
   <div>
-    {content.map(part => (
+    {parts.map(part => (
       <Part key={part.id} name={part.name} exercise={part.exercises} />
     ))}
   </div>
 )
+
+export default Content

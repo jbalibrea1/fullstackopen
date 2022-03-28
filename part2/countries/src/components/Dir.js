@@ -11,7 +11,7 @@ export const FullDir = ({ country }) => {
     access_key: process.env.REACT_APP_API_KEY,
     query: capital,
   }
-
+  console.log('param,', params)
   useEffect(() => {
     console.log('promesa')
     axios
@@ -59,7 +59,7 @@ export const Dir = ({ country, handleSwitchCountry }) => {
   return (
     <div>
       <p>
-        capital {country}
+        {country}
         <button onClick={() => handleSwitchCountry(country)}>Show</button>
       </p>
     </div>
