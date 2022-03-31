@@ -64,7 +64,7 @@ app.delete('/api/persons/:id', async (request, response, next) => {
     const personExists = await Person.findById(request.params.id)
     if (!personExists) {
       return response.status(400).json({
-        error: 'Already deleted.',
+        error: 'Already deleted',
       })
     }
     await Person.findByIdAndRemove(request.params.id)
