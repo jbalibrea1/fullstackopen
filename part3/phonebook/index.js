@@ -59,12 +59,27 @@ app.get('/api/persons/:id', (request, response, next) => {
     .catch((error) => next(error))
 })
 
-app.delete('/api/persons/:id', (request, response, next) => {
-  Person.findByIdAndRemove(request.params.id)
-    .then(() => {
-      response.status(204).end()
-    })
-    .catch((error) => next(error))
+// app.delete('/api/persons/:id', (request, response, next) => {
+//   Person.findByIdAndRemove(request.params.id)
+//     .then(() => {
+//       response.status(204).end()
+//     })
+//     .catch((error) => next(error))
+// })
+
+app.delete('/api/persons/:id', async (request, response, next) => {
+  try {
+    const personExists = await Person.findById(request.params.id)
+    if (!personExists) {
+      return response.status(400).json({
+        error: 'Already deleted',
+      })
+    }
+    await Person.findByIdAndRemove(request.params.id)
+    response.json({ success: true })
+  } catch (error) {
+    next(error)
+  }
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
@@ -75,8 +90,9 @@ app.put('/api/persons/:id', (request, response, next) => {
     { name, number },
     { new: true, runValidators: true, context: 'query' }
   )
-    .then((updatedNote) => {
-      response.json(updatedNote)
+    .then((person) => person.toJSON())
+    .then((formattedPerson) => {
+      response.json(formattedPerson)
     })
     .catch((error) => next(error))
 })
