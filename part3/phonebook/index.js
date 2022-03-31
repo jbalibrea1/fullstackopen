@@ -59,14 +59,6 @@ app.get('/api/persons/:id', (request, response, next) => {
     .catch((error) => next(error))
 })
 
-// app.delete('/api/persons/:id', (request, response, next) => {
-//   Person.findByIdAndRemove(request.params.id)
-//     .then(() => {
-//       response.status(204).end()
-//     })
-//     .catch((error) => next(error))
-// })
-
 app.delete('/api/persons/:id', async (request, response, next) => {
   try {
     const personExists = await Person.findById(request.params.id)
@@ -76,7 +68,7 @@ app.delete('/api/persons/:id', async (request, response, next) => {
       })
     }
     await Person.findByIdAndRemove(request.params.id)
-    response.json({ success: true })
+    response.status(204).end()
   } catch (error) {
     next(error)
   }
