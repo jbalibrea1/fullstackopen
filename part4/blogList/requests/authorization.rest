@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs 
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvcmdlIiwiaWQiOiI2MjRiMWRhMTRmNTk3NGNiMzNiNTE2MTgiLCJpYXQiOjE2NDkwOTI4Nzd9.M4Hkk_8h4j1D4LU0sSrEDpuDdr0TrSGOH11LCMCGNJg
+
+{
+    "title": "Blog Jorge with token3",
+    "author": "Me",
+    "likes": 3,
+    "url": "https://testingbrear.com/"
+}
