@@ -28,19 +28,23 @@ const favoriteBlog = (blog) => {
 
 const mostBlogs = (blogs) => {
   if (blogs.length === 0) return null
-  const authorCounts = _.countBy(blogs, (blog) => blog.author)
-  console.log(authorCounts)
-  return _.reduce(
-    authorCounts,
-    (max, numBlogs, author) => {
-      if (numBlogs > max.blogs) {
-        max.blogs = numBlogs
-        max.author = author
-      }
-      return max
-    },
-    { blogs: 0, author: '' }
-  )
+  const authors = _.countBy(blogs, 'author')
+  console.log(authors)
+  let author = ''
+  let max = 0
+
+  for (const prop in authors) {
+    console.log('prop', prop, 'authorprop', authors[prop])
+    if (authors[prop] > max) {
+      max = authors[prop]
+      author = prop
+    }
+  }
+
+  return {
+    author: author,
+    blogs: max,
+  }
 }
 
 module.exports = {

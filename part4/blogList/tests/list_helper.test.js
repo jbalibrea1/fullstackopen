@@ -4,6 +4,7 @@ const {
   favoriteBlog,
   mostBlogs,
 } = require('../utils/list_helper')
+
 const listWithOneBlog = [
   {
     _id: '5a422aa71b54a676234d17f8',
@@ -96,5 +97,6 @@ describe('most author blogs', () => {
   test('most blog test', () => {
     const result = mostBlogs(blogs)
     expect(result.author).toBe('Robert C. Martin')
+    expect(result.blogs).toBe(3)
   })
 })

@@ -5,5 +5,5 @@ Content-Type: application/json
     "title": "Blog Jorge with userIDs",
     "author": "Me",
     "url": "https://testingbrear.com/",
-    "userId": "624b1da14f5974cb33b51618"
+    "userId": "624c26f46083c58d30f86565"
 }
