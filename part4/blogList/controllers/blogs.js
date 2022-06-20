@@ -9,7 +9,7 @@ blogRouter.get('/', async (request, response) => {
   response.json(blogs)
 })
 
-blogRouter.post('/',userExtractor, async (request, response) => {
+blogRouter.post('/', userExtractor, async (request, response) => {
   const body = request.body
 
   const userId = request.userId
@@ -30,7 +30,7 @@ blogRouter.post('/',userExtractor, async (request, response) => {
   response.status(201).json(savedBlog)
 })
 
-blogRouter.delete('/:id',userExtractor, async (request, response) => {
+blogRouter.delete('/:id', userExtractor, async (request, response) => {
   const blog = await Blog.findById(request.params.id)
 
   const userId = request.userId
@@ -46,7 +46,7 @@ blogRouter.delete('/:id',userExtractor, async (request, response) => {
   }
 })
 
-blogRouter.put('/:id',userExtractor, async (request, response) => {
+blogRouter.put('/:id', userExtractor, async (request, response) => {
   const body = request.body
   const blogId = await Blog.findById(request.params.id)
   const userId = request.userId
@@ -70,7 +70,6 @@ blogRouter.put('/:id',userExtractor, async (request, response) => {
       .status(401)
       .json({ error: 'Unauthorized to delete this blog' })
   }
-
 })
 
 module.exports = blogRouter

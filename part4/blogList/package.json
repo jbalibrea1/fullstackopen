@@ -7,7 +7,8 @@
     "start": "NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development nodemon index.js",
     "lint": "eslint .",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit --silent"
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit --silent",
+    "start:test": "cross-env NODE_ENV=test node index.js"
   },
   "author": "Jorge Balibrea",
   "license": "MIT",
