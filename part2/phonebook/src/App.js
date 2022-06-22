@@ -50,11 +50,18 @@ const App = () => {
             setNewMsg({ show: `Updated ${newName}`, color: 'green' })
             setTimeout(() => {
               setNewMsg(null)
-            }, 2000)
+            }, 5000)
           })
           .catch(err => {
-            console.log(err)
+            console.log('error', err)
             setPersons(persons.filter(n => n.id !== oldId))
+            setNewMsg({
+              show: `Information of ${newName} has already been removed from server`,
+              color: 'red',
+            })
+            setTimeout(() => {
+              setNewMsg(null)
+            }, 5000)
           })
         setNewName('')
         setNewNumber('')
@@ -68,13 +75,19 @@ const App = () => {
           setNewMsg({ show: `Added ${newName}`, color: 'green' })
           setTimeout(() => {
             setNewMsg(null)
-          }, 2000)
+          }, 5000)
+          setNewName('')
+          setNewNumber('')
         })
-        .catch(err => {
-          console.log(err)
+        .catch(error => {
+          console.log(error.response.data)
+          const errorVal = Object.values(error.response.data)
+          console.log(errorVal)
+          setNewMsg({ show: `${errorVal}`, color: 'red' })
+          setTimeout(() => {
+            setNewMsg(null)
+          }, 5000)
         })
-      setNewName('')
-      setNewNumber('')
     }
   }
 
@@ -88,7 +101,7 @@ const App = () => {
           setNewMsg({ show: `${name} removed from server`, color: 'green' })
           setTimeout(() => {
             setNewMsg(null)
-          }, 2000)
+          }, 5000)
         })
         .catch(err => {
           console.log(err)
@@ -98,7 +111,7 @@ const App = () => {
           })
           setTimeout(() => {
             setNewMsg(null)
-          }, 2000)
+          }, 5000)
         })
       setPersons(persons.filter(x => x.id !== id))
       setNewName('')
