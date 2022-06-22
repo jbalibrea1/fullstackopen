@@ -17,9 +17,9 @@ export const { showNotification } = notificationSlice.actions
 
 export const setNotification = (notification, time) => {
   return (dispatch) => {
-    window.clearTimeout(timeout)
+    clearTimeout(timeout)
     dispatch(showNotification(notification))
-    timeout = window.setTimeout(
+    timeout = setTimeout(
       () => dispatch(showNotification(initialState)),
       time * 1000
     )
