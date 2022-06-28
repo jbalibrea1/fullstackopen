@@ -23,6 +23,7 @@ export const { showNotification, reset } = notificationSlice.actions
 
 export const setNotification = (notification, type, time) => {
   return (dispatch) => {
+    if(notification===null){dispatch(reset())}
     clearTimeout(timeout)
     dispatch(showNotification({ notification, type }))
     timeout = setTimeout(() => dispatch(reset()), time * 1000)
