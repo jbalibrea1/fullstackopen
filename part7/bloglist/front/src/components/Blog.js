@@ -5,7 +5,7 @@ import { setNotification } from '../reducers/notificationReducer'
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch()
-
+  console.log('props que llegan',blog)
   const [visible, setVisible] = useState(false)
   const toggleVisibility = () => {
     setVisible(!visible)

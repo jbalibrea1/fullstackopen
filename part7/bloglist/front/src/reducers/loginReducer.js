@@ -11,7 +11,6 @@ const authReducer = createSlice({
     setUser(state, action) {
       console.log('🚀 ~ file: loginReducer.js ~ line 25 ~ setUser ~ action', action)
       state = action.payload.username
-      console.log('🚀 ~ file: loginReducer.js ~ line 25 ~ setUser ~ state', state)
       return state
     },
     reset: () => initialState,
