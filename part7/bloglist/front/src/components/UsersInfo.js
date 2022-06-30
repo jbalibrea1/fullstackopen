@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 const UsersInfo = () => {
   const usersState = useSelector((state) => state.users)
+
   return (
     <div>
       <h2>Users</h2>

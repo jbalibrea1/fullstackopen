@@ -1,12 +1,15 @@
 import {  React } from 'react'
 import { useDispatch } from 'react-redux'
 import { voteBlogs, deleteBlog,commentBlog } from '../reducers/blogReducer'
+import { useField } from '../hooks/'
 
 const Blog = ({ blog }) => {
   if(!blog){
     return null
   }
+
   const dispatch = useDispatch()
+  const comment = useField('text')
 
   const handleVote = (blog) => {
     dispatch(voteBlogs(blog))
@@ -16,11 +19,10 @@ const Blog = ({ blog }) => {
     dispatch(deleteBlog(blog.id, blog.title))
   }
 
-  const handleAddComment = (event) => {
-    event.preventDefault()
-    const comment = event.target.comment.value
-    event.target.comment.value = ''
-    dispatch(commentBlog(blog, comment))
+  const handleAddComment = (e) => {
+    e.preventDefault()
+    dispatch(commentBlog(blog, comment.value))
+    comment.input.clear()
   }
 
   return (
@@ -35,7 +37,7 @@ const Blog = ({ blog }) => {
       <p>Added By {blog.user.username}</p>
       <h3>comments</h3>
       <form onSubmit={handleAddComment}>
-        <input type="text" name="comment"/>
+        <input {...comment}/>
         <button type='submit'>add comment</button>
       </form>
       <ul>

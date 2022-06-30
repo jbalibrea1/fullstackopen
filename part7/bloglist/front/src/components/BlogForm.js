@@ -1,26 +1,25 @@
 import { React } from 'react'
 import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
+import { useField } from '../hooks/'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
+  const title = useField('text')
+  const author = useField('text')
+  const url = useField('text')
 
   const addBlog = (event) => {
     event.preventDefault()
-    const title = event.target.title.value
-    const author = event.target.author.value
-    const url = event.target.url.value
-
-    event.target.title.value = ''
-    event.target.author.value = ''
-    event.target.url.value = ''
-
     const newBlog = {
-      title,
-      author,
-      url,
+      title: title.value,
+      author: author.value,
+      url: url.value,
     }
     dispatch(createBlog(newBlog))
+    title.input.clear()
+    author.input.clear()
+    url.input.clear()
   }
 
   return (
@@ -28,15 +27,15 @@ const BlogForm = () => {
       <form onSubmit={addBlog}>
         <div>
           title
-          <input type="text" name="title" id="blog-title" />
+          <input {...title}/>
         </div>
         <div>
           author
-          <input type="text" name="author" id="blog-author" />
+          <input {...author} />
         </div>
         <div>
           url
-          <input type="text" name="url" id="blog-url" />
+          <input {...url}/>
         </div>
         <button type="submit" id="blog-create">
           create
