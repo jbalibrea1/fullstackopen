@@ -1,10 +1,10 @@
-import { React,  useEffect, useRef } from 'react'
+import { React,  useEffect } from 'react'
 
 import Notification from './components/Notification'
 
 import Togglable from './components/Togglable'
 
-import NewBlog from './components/NewBlogForm'
+
 import LoginForm from './components/LoginForm'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,6 +14,7 @@ import { initializeAllUsers } from './reducers/usersReducer'
 import { Routes, Route, useMatch, Link } from 'react-router-dom'
 
 import BlogList from './components/BlogList'
+import Blog from './components/Blog'
 import UsersInfo from './components/UsersInfo'
 import UserList from './components/UserList'
 
@@ -22,6 +23,7 @@ const App = () => {
 
   const user = useSelector((state) => state.user)
   const users = useSelector((state) => state.users)
+  const blogs = useSelector((state) => state.blogs)
 
   useEffect(() => {
     dispatch(initializeBlogs())
@@ -29,22 +31,26 @@ const App = () => {
     dispatch(initializeAllUsers())
   }, [dispatch])
 
-  const newBlogRef = useRef()
+
 
   const disconnect = () => {
-    console.log('DII')
     window.localStorage.removeItem('loggedBlogappUser')
     dispatch(logout())
   }
 
-  const match = useMatch('/users/:id')
-  const userMatchId = match
-    ? users.find((users) => users.id === match.params.id)
+  const userMatch = useMatch('/users/:id')
+  const userMatchId = userMatch
+    ? users.find((users) => users.id === userMatch.params.id)
     : null
 
-  console.log('userMatchId',userMatchId)
+  const blogMatch = useMatch('/blogs/:id')
+  const blogMatchId = blogMatch
+    ? blogs.find((blog) => blog.id === blogMatch.params.id)
+    : null
 
-
+  const stylePadding = {
+    paddingRight: 5,
+  }
   return (
     <div>
       {user === null ? (
@@ -57,21 +63,16 @@ const App = () => {
         </div>
       ) : (
         <div>
-          <Link to="/users">
-          users
+          <Link to="/" style={stylePadding}>
+          blogs
           </Link>
-          <h2>blogs</h2>
+          <Link to="/users" style={stylePadding}>
+            users
+          </Link>
+          <em>{user} logged in</em> <button onClick={disconnect}>logout</button>
           <div>
-            <p>
-              {user} logged in <button onClick={disconnect}>logout</button>
-            </p>
             <Notification />
           </div>
-          <h2>create new</h2>
-          <Togglable buttonLabel="New Blog" ref={newBlogRef}>
-            <NewBlog />
-          </Togglable>
-
           <Routes>
             <Route path="/"
               element={ <BlogList />}
@@ -80,6 +81,9 @@ const App = () => {
               element={ <UsersInfo/>}/>
             <Route  path="/users/:id"
               element={<UserList blogUser={userMatchId}/>}
+            />
+            <Route  path="/blogs/:id"
+              element={<Blog blog={blogMatchId}/>}
             />
 
           </Routes>

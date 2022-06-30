@@ -1,58 +1,48 @@
-import { useState, React } from 'react'
+import {  React } from 'react'
 import { useDispatch } from 'react-redux'
-import { voteBlogs, deleteBlog } from '../reducers/blogReducer'
-import { setNotification } from '../reducers/notificationReducer'
+import { voteBlogs, deleteBlog,commentBlog } from '../reducers/blogReducer'
 
 const Blog = ({ blog }) => {
+  if(!blog){
+    return null
+  }
   const dispatch = useDispatch()
-  console.log('props que llegan',blog)
-  const [visible, setVisible] = useState(false)
-  const toggleVisibility = () => {
-    setVisible(!visible)
-  }
 
-  const vote = (blog) => {
+  const handleVote = (blog) => {
     dispatch(voteBlogs(blog))
-    dispatch(setNotification(`you voted '${blog.title}'`, 'success', 10))
   }
 
-  const removeBlog = (blog) => {
-    dispatch(deleteBlog(blog.id))
-    dispatch(
-      setNotification(
-        `Blog  '${blog.title}' deleted successfully`,
-        'warning',
-        10
-      )
-    )
+  const handleRemoveBlog = (blog) => {
+    dispatch(deleteBlog(blog.id, blog.title))
   }
 
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5,
+  const handleAddComment = (event) => {
+    event.preventDefault()
+    const comment = event.target.comment.value
+    event.target.comment.value = ''
+    dispatch(commentBlog(blog, comment))
   }
 
   return (
-    <div style={blogStyle} className="blog">
-      <div className="titleAndAuthor">
-        {blog.title} {blog.author}
-        <button onClick={toggleVisibility}>{visible ? 'close' : 'view'}</button>
+    <div className="blog">
+      <h2>blog app</h2>
+      <h2>{blog.title} {blog.author}</h2>
+      <div>
+        <p>{blog.url}</p>
+        <p>{blog.likes} likes <button onClick={() => handleVote(blog)}>add likes</button></p>
+        <button onClick={() => handleRemoveBlog(blog)}>Delete</button>
       </div>
-      {visible ? (
-        <div>
-          <p>url: {blog.url}</p>
-          <p>
-            likes: {blog.likes}
-            <button onClick={() => vote(blog)}>add likes</button>
-          </p>
-          <button onClick={() => removeBlog(blog)}>Delete</button>
-        </div>
-      ) : (
-        <div></div>
-      )}
+      <p>Added By {blog.user.username}</p>
+      <h3>comments</h3>
+      <form onSubmit={handleAddComment}>
+        <input type="text" name="comment"/>
+        <button type='submit'>add comment</button>
+      </form>
+      <ul>
+        {blog.comments.map((comment, index) => (
+          <li key={index}>{comment.comment}</li>
+        ))}
+      </ul>
     </div>
   )
 }

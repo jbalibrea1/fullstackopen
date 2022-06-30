@@ -8,10 +8,8 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     showNotification(state, action) {
-      console.log('action.payload ', action)
-      const type = action.payload.type
-      const msg = action.payload.notification
-      state = { type: type, msg: msg }
+      const { type, msg } = action.payload
+      state = { type, msg }
 
       return state
     },
@@ -21,11 +19,11 @@ const notificationSlice = createSlice({
 
 export const { showNotification, reset } = notificationSlice.actions
 
-export const setNotification = (notification, type, time) => {
+export const setNotification = (msg, type, time) => {
   return (dispatch) => {
-    if(notification===null){dispatch(reset())}
+    if(msg===null){dispatch(reset())}
     clearTimeout(timeout)
-    dispatch(showNotification({ notification, type }))
+    dispatch(showNotification({ msg, type }))
     timeout = setTimeout(() => dispatch(reset()), time * 1000)
   }
 }

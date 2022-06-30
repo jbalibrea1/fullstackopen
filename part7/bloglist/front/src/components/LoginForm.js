@@ -1,9 +1,8 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { userLogin } from '../reducers/loginReducer'
 
-const Login = () => {
+const LoginForm = () => {
   const dispatch = useDispatch()
 
   const handleLogin = (event) => {
@@ -32,10 +31,4 @@ const Login = () => {
   )
 }
 
-// Login.propTypes = {
-//   handleLogin: PropTypes.func.isRequired,
-//   password: PropTypes.string.isRequired,
-//   username: PropTypes.string.isRequired,
-// }
-
-export default Login
+export default LoginForm

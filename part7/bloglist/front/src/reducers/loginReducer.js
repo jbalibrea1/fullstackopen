@@ -9,7 +9,6 @@ const authReducer = createSlice({
   initialState,
   reducers: {
     setUser(state, action) {
-      console.log('🚀 ~ file: loginReducer.js ~ line 25 ~ setUser ~ action', action)
       state = action.payload.username
       return state
     },

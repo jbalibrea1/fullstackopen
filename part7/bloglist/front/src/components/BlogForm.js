@@ -2,7 +2,7 @@ import { React } from 'react'
 import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
 
-const NewBlog = () => {
+const BlogForm = () => {
   const dispatch = useDispatch()
 
   const addBlog = (event) => {
@@ -46,4 +46,4 @@ const NewBlog = () => {
   )
 }
 
-export default NewBlog
+export default BlogForm

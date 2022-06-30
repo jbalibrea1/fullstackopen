@@ -1,24 +1,33 @@
-import React from 'react'
+import { React, useRef } from 'react'
 import { useSelector } from 'react-redux'
-// import { voteAnecdotes } from '../reducers/anecdoteReducer'
-// import { setNotification } from '../reducers/notificationReducer'
-import Blog from '../components/Blog'
+import Togglable from '../components/Togglable'
+import { Link } from 'react-router-dom'
+import BlogForm from '../components/BlogForm'
 
 const BlogList = () => {
   const blogs = useSelector((state) => state.blogs)
-  // const filter = useSelector((state) => state.filter)
-  // const dispatch = useDispatch()
+  const newBlogRef = useRef()
 
-  // const vote = (anecdote) => {
-  //   dispatch(voteAnecdotes(anecdote.id))
-  //   dispatch(setNotification(`you voted '${anecdote.content}'`, 10))
-  // }
+  const blogStyle = {
+    paddingTop: 10,
+    paddingLeft: 2,
+    border: 'solid',
+    borderWidth: 1,
+    marginBottom: 5,
+  }
 
-  // FALTA short a - b
+  const blogsForSort = [...blogs]
+
   return (
     <div>
-      {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
+      <h2>blogs</h2>
+      <Togglable buttonLabel="create new" ref={newBlogRef}>
+        <BlogForm />
+      </Togglable>
+      {blogsForSort.sort((a, b) => b.likes - a.likes).map((blog) => (
+        <div key={blog.id} style={blogStyle}>
+          <Link to={`/blogs/${blog.id}`}> {blog.title} {blog.author}</Link>
+        </div>
       ))}
     </div>
   )

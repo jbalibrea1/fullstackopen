@@ -21,7 +21,9 @@ blogRouter.post('/', userExtractor, async (request, response) => {
     url: body.url,
     likes: body.likes || 0,
     user: user._id,
+    comments: body.comments,
   })
+  console.log(blog)
 
   const savedBlog = await blog.save()
   user.blogs = user.blogs.concat(savedBlog._id)
@@ -45,12 +47,8 @@ blogRouter.delete('/:id', userExtractor, async (request, response) => {
       .json({ error: 'Unauthorized to delete this blog' })
   }
 })
-
-blogRouter.put('/:id', userExtractor, async (request, response) => {
+blogRouter.put('/:id', async (request, response) => {
   const body = request.body
-  const blogId = await Blog.findById(request.params.id)
-  const userId = request.userId
-  const user = await User.findById(userId)
 
   const blog = {
     title: body.title,
@@ -60,16 +58,27 @@ blogRouter.put('/:id', userExtractor, async (request, response) => {
     comments: body.comments,
   }
 
-  if (blogId.user.toString() === user._id.toString()) {
+  try {
     const updated = await Blog.findByIdAndUpdate(request.params.id, blog, {
       new: true,
     })
     response.json(updated)
-  } else {
+  } catch {
     return response
       .status(401)
-      .json({ error: 'Unauthorized to delete this blog' })
+      .json({ error: 'Unauthorized to edit this blog' })
   }
+})
+
+blogRouter.post('/:id/comments', async (request, response) => {
+  const blogId = request.params.id
+  const { comment } = request.body
+
+  const requestBlog = await Blog.findById(blogId)
+
+  requestBlog.comments = requestBlog.comments.concat(comment)
+  const savedComment = await requestBlog.save()
+  response.status(201).json(savedComment)
 })
 
 module.exports = blogRouter
