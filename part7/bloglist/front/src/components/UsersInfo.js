@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { STable, STBody, STR, STD, STH, STHead, STHeadTR } from './Table'
+import { StyledLink } from './StyledLink'
 
 const UsersInfo = () => {
   const usersState = useSelector((state) => state.users)
@@ -8,26 +9,28 @@ const UsersInfo = () => {
   return (
     <div>
       <h2>Users</h2>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>
+      <STable>
+        <STHead>
+          <STHeadTR>
+            <STH></STH>
+            <STH>
               <b>Blogs created</b>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
+            </STH>
+          </STHeadTR>
+        </STHead>
+        <STBody>
           {usersState.map((user) => {
             return (
-              <tr key={user.id}>
-                <td><Link to={`/users/${user.id}`}>{user.name}</Link></td>
-                <td>{user.blogs.length}</td>
-              </tr>
+              <STR key={user.id}>
+                <STD>
+                  <StyledLink to={`/users/${user.id}`}>{user.name}</StyledLink>
+                </STD>
+                <STD>{user.blogs.length}</STD>
+              </STR>
             )
           })}
-        </tbody>
-      </table>
+        </STBody>
+      </STable>
     </div>
   )
 }

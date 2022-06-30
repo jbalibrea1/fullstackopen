@@ -24,7 +24,7 @@ const blogSlice = createSlice({
     removeBlog(state, action) {
       return state.filter(({ id }) => id !== action.payload)
     },
-    addComment(state,action){
+    addComment(state, action) {
       const { comments, id } = action.payload
       const blogToChange = state.find((n) => n.id === id)
       const updateBlog = {
@@ -32,11 +32,12 @@ const blogSlice = createSlice({
         comments,
       }
       return state.map((blog) => (blog.id !== id ? blog : updateBlog))
-    }
+    },
   },
 })
 
-export const { setBlogs, appendBlogs, addLike, removeBlog, addComment } = blogSlice.actions
+export const { setBlogs, appendBlogs, addLike, removeBlog, addComment } =
+  blogSlice.actions
 
 export const initializeBlogs = () => {
   return async (dispatch) => {
@@ -47,32 +48,44 @@ export const initializeBlogs = () => {
 
 export const createBlog = (content) => {
   return async (dispatch) => {
-    try{const newBlog = await blogService.create(content)
+    try {
+      const newBlog = await blogService.create(content)
       dispatch(appendBlogs(newBlog))
-      dispatch(setNotification( `a new blog ${content.title} by ${content.author}`, 'success', 10))
-    }catch(error){
-      dispatch(setNotification( `cant add a new blog called ${content.title}`, 'warning', 10))
+      dispatch(
+        setNotification(
+          `a new blog ${content.title} by ${content.author}`,
+          'success',
+          5
+        )
+      )
+    } catch (error) {
+      dispatch(
+        setNotification(
+          `cant add a new blog called ${content.title}`,
+          'warning',
+          5
+        )
+      )
     }
   }
 }
 
 export const deleteBlog = (blogId, blogTitle) => {
   return async (dispatch) => {
-    try{
+    try {
       await blogService.deleteBlog(blogId)
       dispatch(removeBlog(blogId))
       dispatch(
         setNotification(
           `Blogv2  '${blogTitle}' deleted successfully`,
           'success',
-          10
+          5
         )
       )
-    }catch(error){
-      dispatch(setNotification(`cant delete ${blogTitle} blog`, 'warning', 10))
+    } catch (error) {
+      dispatch(setNotification(`cant delete ${blogTitle} blog`, 'warning', 5))
     }
   }
-
 }
 
 export const voteBlogs = (blog) => {
@@ -82,17 +95,19 @@ export const voteBlogs = (blog) => {
       likes: blog.likes + 1,
     })
     dispatch(addLike(updateBlog))
-    dispatch(setNotification(`a new like to ${blog.title} added`, 'success', 10))
+    dispatch(setNotification(`a new like to ${blog.title} added`, 'success', 5))
   }
 }
 
-export const commentBlog = (blog,comment) => {
+export const commentBlog = (blog, comment) => {
   return async (dispatch) => {
     const newComment = await blogService.commentBlog(blog.id, {
       comment,
     })
     dispatch(addComment(newComment))
-    dispatch(setNotification(`a new comment to ${blog.title} added`, 'success', 10))
+    dispatch(
+      setNotification(`a new comment to ${blog.title} added`, 'success', 5)
+    )
   }
 }
 

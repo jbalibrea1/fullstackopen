@@ -3,7 +3,7 @@ import loginService from '../services/login'
 import { createSlice } from '@reduxjs/toolkit'
 import { setNotification } from '../reducers/notificationReducer'
 
-const initialState =  null
+const initialState = null
 const authReducer = createSlice({
   name: 'login',
   initialState,
@@ -15,10 +15,10 @@ const authReducer = createSlice({
     reset: () => initialState,
   },
 })
-export const { setUser,reset } = authReducer.actions
+export const { setUser, reset } = authReducer.actions
 
 export const initializeUser = () => {
-  return async(dispatch) => {
+  return async (dispatch) => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
@@ -30,16 +30,17 @@ export const initializeUser = () => {
 
 export const userLogin = (username, password) => {
   return async (dispatch) => {
-    try{ const user = await loginService.login({
-      username,
-      password
-    })
-    window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
-    blogService.setToken(user.token)
-    dispatch(setUser(user))
-    dispatch(setNotification(null))
-    }catch (exception) {
-      dispatch(setNotification('wrong username or password', 'warning', 10))
+    try {
+      const user = await loginService.login({
+        username,
+        password,
+      })
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
+      blogService.setToken(user.token)
+      dispatch(setUser(user))
+      dispatch(setNotification(null))
+    } catch (exception) {
+      dispatch(setNotification('wrong username or password', 'warning', 5))
     }
   }
 }

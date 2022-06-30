@@ -10,7 +10,6 @@ const notificationSlice = createSlice({
     showNotification(state, action) {
       const { type, msg } = action.payload
       state = { type, msg }
-
       return state
     },
     reset: () => initialState,
@@ -21,7 +20,9 @@ export const { showNotification, reset } = notificationSlice.actions
 
 export const setNotification = (msg, type, time) => {
   return (dispatch) => {
-    if(msg===null){dispatch(reset())}
+    if (!msg) {
+      dispatch(reset())
+    }
     clearTimeout(timeout)
     dispatch(showNotification({ msg, type }))
     timeout = setTimeout(() => dispatch(reset()), time * 1000)

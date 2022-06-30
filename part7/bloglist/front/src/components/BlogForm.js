@@ -3,6 +3,9 @@ import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
 import { useField } from '../hooks/'
 
+import { Button } from './Button'
+import { Form, Input } from './FormStyle'
+
 const BlogForm = () => {
   const dispatch = useDispatch()
   const title = useField('text')
@@ -23,25 +26,20 @@ const BlogForm = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={addBlog}>
+    <>
+      <Form onSubmit={addBlog}>
         <div>
-          title
-          <input {...title}/>
+          <Input {...title} placeholder="Title" />
+          <Input {...author} placeholder="author" />
+          <Input {...url} placeholder="Url" />
         </div>
         <div>
-          author
-          <input {...author} />
+          <Button type="submit" id="blog-create">
+            create
+          </Button>
         </div>
-        <div>
-          url
-          <input {...url}/>
-        </div>
-        <button type="submit" id="blog-create">
-          create
-        </button>
-      </form>
-    </div>
+      </Form>
+    </>
   )
 }
 

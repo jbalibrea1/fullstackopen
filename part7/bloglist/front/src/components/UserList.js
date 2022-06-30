@@ -1,18 +1,20 @@
 import React from 'react'
 
-// userMatchId.blogs.map((blog) => <UserList key={blog.id} blogUser={blog}/>)}/>
+import { UlStyle, LiStyle } from './ListStyle'
 const UsersList = ({ blogUser }) => {
-  if(!blogUser){
+  if (!blogUser) {
     return null
   }
 
   return (
     <div>
-      <h2>{blogUser.username}</h2>
+      <h1>{blogUser.username}</h1>
       <p>added blogs</p>
-      <ul>
-        {blogUser.blogs.map(blog => <li key={blog.id}>{blog.title}</li>)}
-      </ul>
+      <UlStyle>
+        {blogUser.blogs.map((blog) => (
+          <LiStyle key={blog.id}>{blog.title}</LiStyle>
+        ))}
+      </UlStyle>
     </div>
   )
 }

@@ -4,13 +4,12 @@ import notificationReducer from './reducers/notificationReducer'
 import loginReducer from './reducers/loginReducer'
 import usersReducer from './reducers/usersReducer'
 
-
 const store = configureStore({
   reducer: {
     user: loginReducer,
     blogs: blogReducer,
     notification: notificationReducer,
-    users: usersReducer
+    users: usersReducer,
   },
 })
 

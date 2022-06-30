@@ -1,13 +1,20 @@
-import {  React } from 'react'
+import { React } from 'react'
 import { useDispatch } from 'react-redux'
-import { voteBlogs, deleteBlog,commentBlog } from '../reducers/blogReducer'
+import { voteBlogs, deleteBlog, commentBlog } from '../reducers/blogReducer'
+import { useNavigate } from 'react-router-dom'
 import { useField } from '../hooks/'
 
+import { Button } from './Button'
+import { UlStyle, LiStyle } from './ListStyle'
+import { Form, Input } from './FormStyle'
+import { StyledAnchor } from './StyledAnchor'
+
 const Blog = ({ blog }) => {
-  if(!blog){
+  if (!blog) {
     return null
   }
 
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const comment = useField('text')
 
@@ -17,6 +24,9 @@ const Blog = ({ blog }) => {
 
   const handleRemoveBlog = (blog) => {
     dispatch(deleteBlog(blog.id, blog.title))
+    setTimeout(() => {
+      navigate('/')
+    }, 500)
   }
 
   const handleAddComment = (e) => {
@@ -28,23 +38,37 @@ const Blog = ({ blog }) => {
   return (
     <div className="blog">
       <h2>blog app</h2>
-      <h2>{blog.title} {blog.author}</h2>
+      <h1>
+        {blog.title} {blog.author}
+      </h1>
       <div>
-        <p>{blog.url}</p>
-        <p>{blog.likes} likes <button onClick={() => handleVote(blog)}>add likes</button></p>
-        <button onClick={() => handleRemoveBlog(blog)}>Delete</button>
+        <StyledAnchor href={blog.url} target="_blank" rel="noreferrer">
+          {blog.url}
+        </StyledAnchor>
+        <div>
+          {blog.likes} likes
+          <Button buttonLeftMargin="20px" onClick={() => handleVote(blog)}>
+            add likes
+          </Button>
+        </div>
       </div>
       <p>Added By {blog.user.username}</p>
+
       <h3>comments</h3>
-      <form onSubmit={handleAddComment}>
-        <input {...comment}/>
-        <button type='submit'>add comment</button>
-      </form>
-      <ul>
+      <Form onSubmit={handleAddComment}>
+        <Input {...comment} />
+        <Button type="submit" buttonLeftMargin="20px">
+          add comment
+        </Button>
+      </Form>
+      <UlStyle>
         {blog.comments.map((comment, index) => (
-          <li key={index}>{comment.comment}</li>
+          <LiStyle key={index}>{comment.comment}</LiStyle>
         ))}
-      </ul>
+      </UlStyle>
+      <Button absolute bottom onClick={() => handleRemoveBlog(blog)}>
+        Delete Blog
+      </Button>
     </div>
   )
 }

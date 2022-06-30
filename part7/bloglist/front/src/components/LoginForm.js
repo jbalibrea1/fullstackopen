@@ -2,6 +2,8 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { userLogin } from '../reducers/loginReducer'
 import { useField } from '../hooks/'
+import { Form, Input } from './FormStyle'
+import { Button } from './Button'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
@@ -16,21 +18,20 @@ const LoginForm = () => {
     userPassword.input.clear()
   }
 
-
   return (
-    <form onSubmit={handleLogin}>
+    <Form onSubmit={handleLogin}>
       <div>
-        username
-        <input {...username} />
+        <Input {...username} placeholder="username" />
       </div>
       <div>
-        password
-        <input {...userPassword}/>
+        <Input {...userPassword} placeholder="password" />
       </div>
-      <button type="submit" id="form-login-button">
-        login
-      </button>
-    </form>
+      <div>
+        <Button type="submit" id="form-login-button">
+          login
+        </Button>
+      </div>
+    </Form>
   )
 }
 

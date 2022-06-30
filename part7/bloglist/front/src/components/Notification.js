@@ -1,25 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Alert } from './Alert'
 
 const Notification = (props) => {
-  const { msg,type } = props.notification
+  const { msg, type } = props.notification
 
   if (!type) {
     return null
   }
 
-  const style = {
-    border: 'solid',
-    padding: 10,
-    borderWidth: 1,
-  }
-
-
-  return (
-    <div style={style} className={type}>
-      {msg}
-    </div>
-  )
+  return <Alert type={type}>{msg}</Alert>
 }
 
 const mapStateToProps = (state) => {
