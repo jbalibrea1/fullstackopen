@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server')
+const { ApolloServer, UserInputError, gql } = require('apollo-server')
 const { argsToArgsConfig } = require('graphql/type/definition')
 const { v1: uuid } = require('uuid')
 let authors = [
@@ -140,6 +140,8 @@ const resolvers = {
 
       if (args.genre)
         return books.filter((book) => book.genres.includes(args.genre))
+
+      return books
     },
     allAuthors: () => {
       const allAuthors = authors.map((author) => {
@@ -160,6 +162,13 @@ const resolvers = {
 
   Mutation: {
     addBook: (root, args) => {
+      if (
+        books.find((p) => p.author === args.author && p.title === args.title)
+      ) {
+        throw new UserInputError('Name and title must be unique', {
+          invalidArgs: [args.author, args.title],
+        })
+      }
       const book = { ...args, id: uuid() }
       books = books.concat(book)
       if (authors.name !== args.author) {
