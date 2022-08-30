@@ -1,5 +1,8 @@
 const { UserInputError, AuthenticationError } = require('apollo-server')
 
+const { PubSub } = require('graphql-subscriptions')
+const pubsub = new PubSub()
+
 const Author = require('./models/author')
 const Book = require('./models/book')
 const User = require('./models/user')
@@ -25,14 +28,15 @@ const resolvers = {
       return await Book.find({}).populate('author')
     },
     allAuthors: async () => {
-      return await Author.find({})
+      return await Author.find({}).populate('bookCount')
+      // return await Author.find({})
     },
   },
   Author: {
     bookCount: async (root) => {
       const book = await Book.find()
-      const bookFilter = book.filter((b) => b.author == root.id)
-      return await bookFilter.length
+      const bookFilter = await book.filter((b) => b.author == root.id)
+      return bookFilter.length
     },
   },
   Mutation: {
@@ -55,7 +59,6 @@ const resolvers = {
 
       const checkAuthor = await Author.findOne({ name: args.author })
       const book = new Book({ ...args, author: checkAuthor })
-      console.log(book)
       try {
         await book.save()
       } catch (error) {
@@ -63,6 +66,8 @@ const resolvers = {
           invalidArgs: args,
         })
       }
+
+      pubsub.publish('BOOK_ADDED', { bookAdded: book })
       return book
     },
 
@@ -106,6 +111,11 @@ const resolvers = {
       }
 
       return { value: jwt.sign(userForToken, JWT_SECRET) }
+    },
+  },
+  Subscription: {
+    bookAdded: {
+      subscribe: () => pubsub.asyncIterator(['BOOK_ADDED']),
     },
   },
 }

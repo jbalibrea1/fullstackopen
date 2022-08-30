@@ -1,24 +1,55 @@
-import { useState } from 'react'
-import { useQuery, useApolloClient } from '@apollo/client'
+import { useState, useEffect } from 'react'
+import { useQuery, useApolloClient, useSubscription } from '@apollo/client'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import Recommendations from './components/Recommendations'
 
-import { ALL_AUTHORS } from './queries'
+import { ALL_AUTHORS, BOOK_ADDED, ALL_BOOKS } from './queries'
+
+// function that takes care of manipulating cache
+export const updateCache = (cache, query, addedBook) => {
+  const uniqByTitle = (a) => {
+    let seen = new Set()
+    return a.filter((item) => {
+      let k = item.title
+      return seen.has(k) ? false : seen.add(k)
+    })
+  }
+  cache.updateQuery(query, ({ allBooks }) => {
+    return {
+      allBooks: uniqByTitle(allBooks.concat(addedBook)),
+    }
+  })
+}
 
 const App = () => {
+  const [books, setBooks] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
   const [page, setPage] = useState('authors')
   const [token, setToken] = useState(() =>
     localStorage.getItem('books-user-token')
   )
-
   const authors = useQuery(ALL_AUTHORS)
+  const result = useQuery(ALL_BOOKS)
 
   const client = useApolloClient()
+  console.log(client.cache);
 
+  useEffect(() => {
+    if (result.data) {
+      setBooks(result.data.allBooks)
+    }
+  }, [result.data])
+
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData, client }) => {
+      const addedBook = subscriptionData.data.bookAdded
+      window.alert(`${addedBook.title} added`)
+      updateCache(client.cache, { query: ALL_BOOKS }, addedBook)
+    },
+  })
   if (authors.loading) {
     return <div>loading...</div>
   }
@@ -58,9 +89,9 @@ const App = () => {
         authors={authors.data.allAuthors}
         setError={notify}
       />
-      <Books show={page === 'books'} />
+      <Books show={page === 'books'} results={books} />
       <NewBook show={page === 'add'} setError={notify} />
-      <Recommendations show={page === 'recommend'} />
+      <Recommendations show={page === 'recommend'} results={books}/>
       <LoginForm
         show={page === 'login'}
         setToken={setToken}

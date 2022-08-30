@@ -1,23 +1,18 @@
-import { useQuery } from '@apollo/client'
-import { ALL_BOOKS } from '../queries'
+// import { useQuery } from '@apollo/client'
+// import { ALL_BOOKS } from '../queries'
+// import { useState, useEffect } from 'react'
 import { useState, useEffect } from 'react'
 
-const Books = ({ show }) => {
-  const result = useQuery(ALL_BOOKS)
-  const [books, setBooks] = useState(null)
+const Books = ({ show, results }) => {
+  const allBooks = results
+  const [books, setBooks] = useState(allBooks)
   const [genreFilter, setGenreFilter] = useState(null)
 
   useEffect(() => {
-    if (result.data) {
-      setBooks(result.data.allBooks)
-    }
-  }, [result.data])
+    setBooks(allBooks)
+  }, [allBooks])
 
   if (!show) return null
-  if (result.loading) return <div>loading...</div>
-
-  const { allBooks } = result.data
-
   const uniquesGenres = [...new Set(allBooks.flatMap((b) => b.genres))]
 
   const handleGenre = (genre = null) => {

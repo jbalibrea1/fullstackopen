@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation, useApolloClient } from '@apollo/client'
-import { LOGIN, ME } from '../queries'
+import { LOGIN } from '../queries'
 
 const LoginForm = ({ setError, setToken, show, setPage }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   const [login, result] = useMutation(LOGIN, {
-    refetchQueries: [{ query: ME }],
     onError: (error) => {
       setError(error.graphQLErrors[0].message)
     },
@@ -21,6 +20,8 @@ const LoginForm = ({ setError, setToken, show, setPage }) => {
       setToken(token)
       setPage('authors')
       localStorage.setItem('books-user-token', token)
+      setUsername("")
+      setPassword("")
     }
   }, [result.data]) // eslint-disable-line
 
