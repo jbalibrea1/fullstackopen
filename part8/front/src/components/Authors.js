@@ -57,7 +57,6 @@ const SetBirthday = ({ authors, setError }) => {
       setError('Author not found')
     }
   }, [result.data]) //eslint-disable-line
-  console.log('err', result)
   return (
     <>
       <h2>Set birthyear</h2>

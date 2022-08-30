@@ -17,12 +17,6 @@ const NewBook = ({ show, setError }) => {
     },
   })
 
-  // useEffect(() => {
-  //   if (result.data && result.data.createBook === null) {
-  //     setError('cant add a book')
-  //   }
-  // }, [result.data]) // eslint-disable-line
-
   if (!show) {
     return null
   }
