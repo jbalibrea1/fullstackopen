@@ -5,11 +5,12 @@ const Content = ({ parts }: { parts: CoursePart[] }) => {
   return (
     <>
       {Object.values(parts).map((part) => (
-        <ContentPart key={part.name} part={part} />
+        <div key={part.name} style={{ marginBottom: 20 }}>
+          <ContentPart part={part} />
+        </div>
       ))}
     </>
   )
 }
 
 export default Content
-
