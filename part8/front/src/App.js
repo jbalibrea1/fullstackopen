@@ -35,7 +35,6 @@ const App = () => {
   const result = useQuery(ALL_BOOKS)
 
   const client = useApolloClient()
-  console.log(client.cache);
 
   useEffect(() => {
     if (result.data) {
@@ -91,7 +90,7 @@ const App = () => {
       />
       <Books show={page === 'books'} results={books} />
       <NewBook show={page === 'add'} setError={notify} />
-      <Recommendations show={page === 'recommend'} results={books}/>
+      <Recommendations show={page === 'recommend'} results={books} />
       <LoginForm
         show={page === 'login'}
         setToken={setToken}
