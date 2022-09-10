@@ -23,11 +23,3 @@
 ### [Part 8 GraphQL](./part8/)
 
 ### [Part 9 TypeScript](./part9/)
-
-### Part 10 React Native
-
-### Part 11 CI/CD
-
-### Part 12 Containers
-
-### Part 12 Using relational databases
