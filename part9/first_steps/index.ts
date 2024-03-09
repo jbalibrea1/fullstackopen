@@ -1,6 +1,7 @@
 import express from 'express';
 
 import { calculateBmi } from './calculateBmi';
+import { calculator, Operation } from './calculator';
 import { exerciseCalculator } from './exerciseCalculator';
 
 // const express = require('express')
@@ -9,6 +10,38 @@ app.use(express.json());
 
 app.get('/', (_req, res) => {
   res.send('index');
+});
+
+app.get('/ping', (_req, res) => {
+  res.json('pong');
+});
+
+app.get('/calculator', (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { a, b, op } = req.query;
+  console.log(a);
+  console.log(b);
+  console.log(op);
+  if (!a || !b || !op) {
+    return res.status(400).json({ error: 'parameters missing' });
+  }
+
+  const result = calculator(Number(a), Number(b), op as Operation);
+  return res.json({ result });
+});
+
+app.post('/calculatorPost', (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { a, b, op } = req.body;
+  console.log(a);
+  console.log(b);
+  console.log(op);
+  if (!a || !b || !op) {
+    return res.status(400).json({ error: 'parameters missing' });
+  }
+
+  const result = calculator(Number(a), Number(b), op as Operation);
+  return res.json({ result });
 });
 
 app.get('/bmi', (req, res) => {
@@ -55,7 +88,6 @@ app.post('/exercise', (req, res) => {
 });
 
 const PORT = 3002;
-
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

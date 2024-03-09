@@ -1,6 +1,6 @@
 interface BmiValues {
-  height: number
-  weight: number
+  height: number;
+  weight: number;
 }
 
 const parseArguments = (args: Array<string>): BmiValues => {
@@ -21,15 +21,23 @@ export const calculateBmi = (height: number, weight: number): string => {
   const fixedHeight = height / 100;
   const result = weight / Math.pow(fixedHeight, 2);
 
-  if (result < 16) return 'Underweight (Severe thinness)';
-  if (result >= 16 && result <= 16.9) return 'Underweight (Moderate thinness)';
-  if (result >= 17 && result <= 18.4) return 'Underweight (Mild thinness)';
-  if (result >= 18.5 && result <= 24.9) return 'Normal range';
-  if (result >= 25 && result <= 29.9) return 'Overweight (Pre-obese)';
-  if (result >= 30 && result <= 34.9) return 'Obese (Class I)';
-  if (result >= 35 && result <= 39.9) return 'Obese (Class II)';
-  if (result >= 40) return 'Obese (Class III)';
-  else {
+  if (result < 16) {
+    return 'Underweight (Severe thinness)';
+  } else if (result >= 16 && result <= 16.9) {
+    return 'Underweight (Moderate thinness)';
+  } else if (result >= 17 && result <= 18.4) {
+    return 'Underweight (Mild thinness)';
+  } else if (result >= 18.5 && result <= 24.9) {
+    return 'Normal range';
+  } else if (result >= 25 && result <= 29.9) {
+    return 'Overweight (Pre-obese)';
+  } else if (result >= 30 && result <= 34.9) {
+    return 'Obese (Class I)';
+  } else if (result >= 35 && result <= 39.9) {
+    return 'Obese (Class II)';
+  } else if (result >= 40) {
+    return 'Obese (Class III)';
+  } else {
     return 'bad info';
   }
 };
