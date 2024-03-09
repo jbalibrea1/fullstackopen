@@ -1,8 +1,10 @@
-const Total = ({ coursePartsTotal }: { coursePartsTotal: object }) => {
-  const totalOfExercises = Object.values(coursePartsTotal).reduce(
-    (value, part) => value + part.exerciseCount,
+import { CoursePart } from '../types';
+
+const Total = ({ coursePartsTotal }: { coursePartsTotal: CoursePart[] }) => {
+  const totalOfExercises = coursePartsTotal.reduce(
+    (sum, val) => sum + val.exerciseCount,
     0
-  )
-  return <p>Number of exercises {totalOfExercises}</p>
-}
-export default Total
+  );
+  return <p>Number of exercises: {totalOfExercises}</p>;
+};
+export default Total;

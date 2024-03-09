@@ -1,16 +1,16 @@
-import ContentPart from './ContentPart'
-import { CoursePart } from '../types'
+import { CoursePart } from '../types';
+import ContentPart from './ContentPart';
 
 const Content = ({ parts }: { parts: CoursePart[] }) => {
   return (
     <>
-      {Object.values(parts).map((part) => (
+      {parts.map((part) => (
         <div key={part.name} style={{ marginBottom: 20 }}>
           <ContentPart part={part} />
         </div>
       ))}
     </>
-  )
-}
+  );
+};
 
-export default Content
+export default Content;
