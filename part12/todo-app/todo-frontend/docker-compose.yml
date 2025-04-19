@@ -1,0 +1,8 @@
+services:
+  todo-fronted:                   
+    image: todo-frontend:latest
+    build: .           
+    ports:            
+      - "8000:80"
+    environment:
+      - VITE_BACKEND_URL=http://localhost:3000

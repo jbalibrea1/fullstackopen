@@ -1,0 +1,10 @@
+Script iniciado en 2025-04-17 12:59:58+02:00 [COMMAND="bash" TERM="tmux-256color" TTY="/dev/pts/1" COLUMNS="213" LINES="41"]
+]0;jbalibrea@jbalibrea-arch:~/dev/fullstackopen/part12/script-answers[?2004h[jbalibrea@jbalibrea-arch script-answers]$ docker container run -it ubuntu bash
+[?2004l[?2004h]0;root@85bcda3f064c: /root@85bcda3f064c:/# mkdir /usr/src/app
+[?2004l[?2004h]0;root@85bcda3f064c: /root@85bcda3f064c:/# touch /usr/src/app/index.js
+[?2004l[?2004h]0;root@85bcda3f064c: /root@85bcda3f064c:/# [K[?2004l
+exit
+]0;jbalibrea@jbalibrea-arch:~/dev/fullstackopen/part12/script-answers[?2004h[jbalibrea@jbalibrea-arch script-answers]$ [?2004l
+exit
+
+Script terminado en 2025-04-17 13:00:30+02:00 [CÓDIGO_SALIDA_ORDEN="0"]

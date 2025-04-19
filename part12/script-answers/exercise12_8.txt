@@ -1,0 +1,76 @@
+Script iniciado en 2025-04-17 18:14:33+02:00 [COMMAND="bash" TERM="tmux-256color" TTY="/dev/pts/1" COLUMNS="136" LINES="41"]
+]0;jbalibrea@jbalibrea-arch:~/dev/fullstackopen/part12/todo-app/todo-backend[?2004h[jbalibrea@jbalibrea-arch todo-backend]$ docker compose -f docker-compose.dev.yml up -d
+[?2004l[1A[1B[0G[?25l[+] Running 0/1
+ [33m⠋[0m Container todo-backend-mongo-1  Starting                                                                                        [34m0.1s [0m
+[?25h[1A[1A[0G[?25l[34m[+] Running 1/1[0m
+ [32m✔[0m Container todo-backend-mongo-1  [32mStarted[0m                                                                                         [34m0.2s [0m
+[?25h]0;jbalibrea@jbalibrea-arch:~/dev/fullstackopen/part12/todo-app/todo-backend[?2004h[jbalibrea@jbalibrea-arch todo-backend]$ docker exec  -ut[K[Kit todo-backend-mongo-1 mongosh -u root -p example
+[?2004l]0;mongosh mongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000Current Mongosh Log ID:	6801290506b73c8276d861df
+Connecting to:		[1m[32mmongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.0[0m
+Using MongoDB:		8.0.8
+[1m[33mUsing Mongosh[0m:		2.5.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+[1G[0J [1G[?2004h[1m[33m------[0m
+   [1m[33mThe server generated these startup warnings when booting[0m
+   2025-04-17T16:14:46.270+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2025-04-17T16:14:46.501+00:00: Soft rlimits for open file descriptors too low
+   2025-04-17T16:14:46.502+00:00: For customers running the current memory allocator, we suggest changing the contents of the following sysfsFile
+   2025-04-17T16:14:46.502+00:00: We suggest setting the contents of sysfsFile to 0.
+   2025-04-17T16:14:46.502+00:00: We suggest setting swappiness to 0 or 1, as swapping can cause performance problems.
+[1m[33m------[0m
+
+[1G[0Jtest> [7Gshow dbs
+[1madmin[0m         100.00 KiB
+[1mconfig[0m        108.00 KiB
+[1mlocal[0m          72.00 KiB
+[1mthe_database[0m   56.00 KiB
+[1G[0Jtest> [7Guse data[1G[0Jtest> use dat[14G[1G[0Jtest> use da[13G[1G[0Jtest> use d[12G[1G[0Jtest> use [11Gthe_database
+switched to db the_database
+[1G[0Jthe_database> [15Gdb[1G[0Jthe_database> d[16G[1G[0Jthe_database> [15Gshow collections
+[1mtodos[0m
+[1G[0Jthe_database> [15Gdb.todos.find({})
+[
+  {
+    _id: ObjectId([32m'6800f5b310d3986dc8d861e0'[39m),
+    text: [32m'Hello from update'[39m,
+    done: [33mtrue[39m
+  },
+  {
+    _id: ObjectId([32m'6800f5b310d3986dc8d861e1'[39m),
+    text: [32m'Learn about containers'[39m,
+    done: [33mfalse[39m
+  }
+]
+[1G[0Jthe_database> [15Gdb.todos.insertOne({
+[1G[0J... [5Gtext: [32m"[39m[32mI[39m[32mn[39m[32mc[39m[32mr[39m[32me[39m[32ma[39m[32ms[39m[32me[39m [32mt[39m[32mh[39m[32me[39m [32mn[39m[32mu[39m[32mm[39m[32mb[39m[32me[39m[32mr[39m [32mo[39m[32mf[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m[32ms[39m [32mi[39m[32mn[39m [32mm[39m[32my[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m [32mb[39m[32me[39m[32ml[39m[32mt[39m[32m"[39m,
+[1G[0J... [5Gd[36mdo[39mdone: fals[33mfalse[39m
+[1G[0J... [5G})
+{
+  acknowledged: [33mtrue[39m,
+  insertedId: ObjectId([32m'6801297406b73c8276d861e0'[39m)
+}
+[1G[0Jthe_database> [15G[1G[0Jthe_database> db.todos.insertOne({ [33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m })[104G[1G[0Jthe_database> db.todos.find({})[32G
+[
+  {
+    _id: ObjectId([32m'6800f5b310d3986dc8d861e0'[39m),
+    text: [32m'Hello from update'[39m,
+    done: [33mtrue[39m
+  },
+  {
+    _id: ObjectId([32m'6800f5b310d3986dc8d861e1'[39m),
+    text: [32m'Learn about containers'[39m,
+    done: [33mfalse[39m
+  },
+  {
+    _id: ObjectId([32m'6801297406b73c8276d861e0'[39m),
+    text: [32m'Increase the number of tools in my tool belt'[39m,
+    done: [33mfalse[39m
+  }
+]
+[1G[0Jthe_database> [15G
+[?2004l]0;jbalibrea@jbalibrea-arch:~/dev/fullstackopen/part12/todo-app/todo-backend[?2004h[jbalibrea@jbalibrea-arch todo-backend]$ [?2004l
+exit
+
+Script terminado en 2025-04-17 18:17:22+02:00 [CÓDIGO_SALIDA_ORDEN="0"]

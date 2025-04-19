@@ -1,0 +1,6 @@
+services:
+  todo-backend:                   
+    image: todo-backend 
+    build: .           
+    ports:            
+      - 3000:3000
